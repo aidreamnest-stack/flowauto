@@ -1,3 +1,4 @@
+// Flow Automation Service Worker (Chrome DevTools Protocol v1.6.0 - Native Hardware Enter)
 // PicMaze Hardware Event Service Worker (Chrome DevTools Protocol - 100% isTrusted)
 chrome.runtime.onInstalled.addListener(() => {
   console.log("⚡ PicMaze Flow Hardware Automation Engine Installed");
@@ -88,3 +89,4 @@ async function executeHardwareSequence(tabId, promptText) {
     throw err;
   }
 }
+
