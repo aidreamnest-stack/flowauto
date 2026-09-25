@@ -1,3 +1,4 @@
+// Flow Automation Client Controller (v1.6.0)
 document.addEventListener('DOMContentLoaded', async () => {
   const promptsContainer = document.getElementById('promptsContainer');
   const addPromptBtn = document.getElementById('addPromptBtn');
@@ -220,3 +221,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 });
+
