@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flow Automation</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    body {
+      width: 360px;
+      max-height: 580px;
+      background: #0D1117;
+      color: #F8FAFC;
+      padding: 14px;
+      user-select: none;
+      overflow-y: auto;
+    }
+    body::-webkit-scrollbar {
+      width: 5px;
+    }
+    body::-webkit-scrollbar-track {
+      background: #0D1117;
+    }
+    body::-webkit-scrollbar-thumb {
+      background: #30363D;
+      border-radius: 4px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #30363D;
+      margin-bottom: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .title {
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      color: #F8FAFC;
+    }
+    .badge {
+      font-size: 10px;
+      font-weight: 700;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #94A3B8;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .btn-add-prompt {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px dashed #10B981;
+      color: #34D399;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+    .btn-add-prompt:hover {
+      background: rgba(16, 185, 129, 0.25);
+      border-color: #34D399;
+    }
+    .prompts-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+      max-height: 240px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+    .prompts-container::-webkit-scrollbar {
+      width: 4px;
+    }
+    .prompts-container::-webkit-scrollbar-thumb {
+      background: #30363D;
+      border-radius: 4px;
+    }
+    .prompt-card {
+      background: #161B22;
+      border: 1px solid #30363D;
+      border-radius: 8px;
+      padding: 8px;
+      transition: border-color 0.2s;
+    }
+    .prompt-card:focus-within {
+      border-color: #10B981;
+    }
+    .prompt-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    .prompt-tag {
+      font-size: 10px;
+      font-weight: 700;
+      color: #10B981;
+      background: rgba(16, 185, 129, 0.12);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    .btn-del-prompt {
+      background: transparent;
+      border: none;
+      color: #64748B;
+      cursor: pointer;
+      font-size: 13px;
+      line-height: 1;
+      padding: 2px 4px;
+      border-radius: 3px;
+      transition: all 0.15s;
+    }
+    .btn-del-prompt:hover {
+      color: #EF4444;
+      background: rgba(239, 68, 68, 0.15);
+    }
+    .prompt-card textarea {
+      width: 100%;
+      height: 48px;
+      background: #0D1117;
+      border: 1px solid #21262D;
+      border-radius: 6px;
+      color: #F8FAFC;
+      font-size: 11.5px;
+      padding: 6px 8px;
+      resize: none;
+      outline: none;
+      line-height: 1.35;
+      transition: border-color 0.2s;
+    }
+    .prompt-card textarea:focus {
+      border-color: #10B981;
+    }
+    .form-group {
+      margin-bottom: 10px;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+    .col {
+      flex: 1;
+    }
+    label {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #94A3B8;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    input[type="number"] {
+      width: 100%;
+      background: #161B22;
+      border: 1px solid #30363D;
+      border-radius: 6px;
+      color: #F8FAFC;
+      font-size: 12px;
+      padding: 6px 8px;
+      outline: none;
+    }
+    input[type="number"]:focus {
+      border-color: #10B981;
+    }
+    .distribution-hint {
+      font-size: 10.5px;
+      color: #64748B;
+      background: rgba(22, 27, 34, 0.6);
+      border: 1px solid #21262D;
+      border-radius: 6px;
+      padding: 5px 8px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .status-card {
+      background: rgba(22, 27, 34, 0.9);
+      border: 1px solid #30363D;
+      border-radius: 7px;
+      padding: 7px 10px;
+      font-size: 11px;
+      color: #94A3B8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .status-val {
+      font-weight: 700;
+      color: #34D399;
+    }
+    .btn {
+      width: 100%;
+      height: 36px;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: #10B981;
+      color: #022C22;
+    }
+    .btn-primary:hover {
+      background: #059669;
+      color: #FFFFFF;
+    }
+    .btn-danger {
+      background: #EF4444;
+      color: #FFFFFF;
+      display: none;
+    }
+    .btn-danger:hover {
+      background: #DC2626;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="brand">
+      <img src="icons/icon48.png" alt="Ghost Logo" style="width: 20px; height: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);">
+      <div class="title">FLOW AUTOMATION</div>
+    </div>
+    <span class="badge">V1.6.0</span>
+  </div>
+
+  <div class="section-header">
+    <span class="section-label" id="promptsCountLabel">PROMPT LIST (1)</span>
+    <button type="button" id="addPromptBtn" class="btn-add-prompt">+ Add Prompt</button>
+  </div>
+
+  <div id="promptsContainer" class="prompts-container">
+    <!-- Dynamic prompt cards injected via JS -->
+  </div>
+
+  <div class="form-group row">
+    <div class="col">
+      <label>Batch Count</label>
+      <input id="limitInput" type="number" value="10" min="1" max="200">
+    </div>
+    <div class="col">
+      <label>Interval (Sec)</label>
+      <input id="intervalInput" type="number" value="15" min="5" max="120">
+    </div>
+  </div>
+
+  <div id="distributionHint" class="distribution-hint">
+    <span>ℹ️</span>
+    <span id="distributionHintText">Alternates evenly across 1 prompt</span>
+  </div>
+
+  <div class="sound-toggle-row" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; font-size: 11px; color: #94A3B8; background: rgba(22, 27, 34, 0.4); padding: 5px 8px; border-radius: 6px; border: 1px solid #21262D;">
+    <span style="display: flex; align-items: center; gap: 6px;">
+      <span>🔔</span>
+      <span>Completion Sound Chime</span>
+    </span>
+    <input type="checkbox" id="soundToggle" checked style="accent-color: #10B981; cursor: pointer; width: 14px; height: 14px;">
+  </div>
+
+  <div class="status-card">
+    <span>WORKER STATUS:</span>
+    <span id="statusVal" class="status-val">READY</span>
+  </div>
+
+  <button id="startBtn" class="btn btn-primary">▶ START MULTI-PROMPT BATCH</button>
+  <button id="stopBtn" class="btn btn-danger">⏹ STOP WORKER</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>

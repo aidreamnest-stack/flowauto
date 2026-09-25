@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="ghostGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#E2E8F0"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <rect x="24" y="24" width="464" height="464" rx="110" fill="#0D1117" stroke="#30363D" stroke-width="8"/>
+  <circle cx="256" cy="240" r="140" fill="#10B981" opacity="0.18" filter="url(#glow)"/>
+  <path d="M 146 280 C 146 170 190 100 256 100 C 322 100 366 170 366 280 C 375 360 380 400 380 400 C 365 385 350 370 350 370 C 335 387 320 405 320 405 C 305 387 290 370 290 370 C 273 390 256 410 256 410 C 239 390 222 370 222 370 C 207 387 192 405 192 405 C 177 387 162 370 162 370 C 147 385 132 400 132 400 C 132 400 137 360 146 280 Z" fill="url(#ghostGrad)"/>
+  <!-- Eyes -->
+  <polygon points="195,205 230,225 200,240" fill="#0D1117"/>
+  <polygon points="317,205 312,240 282,225" fill="#0D1117"/>
+  <!-- Pupils -->
+  <circle cx="215" cy="225" r="5" fill="#10B981"/>
+  <circle cx="297" cy="225" r="5" fill="#10B981"/>
+  <!-- Mouth -->
+  <polygon points="240,265 256,285 272,265 256,275" fill="#0D1117"/>
+</svg>
